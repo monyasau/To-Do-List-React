@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TodoApp from './pages/TodoApp';
 import reportWebVitals from './reportWebVitals';
+import "./assets/styles/bootstrap.min.css"
+import "./assets/styles/global.css"
 
 ReactDOM.render(<TodoApp/>,  document.getElementById('root'));
 
