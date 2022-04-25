@@ -1,31 +1,91 @@
 import { Component } from "react";
-import InputField from "../components/InputField";
-import ListContainer from "../components/ListContainer";
+import InputField from "../components/InputBox";
+import ListContainer from "../components/TodoList";
 
 export default class TodoApp extends Component {
   constructor() {
     super();
 
     this.state = {
-      items: Array.from(JSON.parse(localStorage.getItem("tasks"))),
-      inputField: "",
+      // items: Array.from(JSON.parse(localStorage.getItem("tasks"))),
+      tasks: [
+        {
+          taskValue: "task1",
+          id: this.uuid(),
+          time: new Date().toLocaleDateString(),
+        },
+        {
+          taskValue: "task2",
+          id: this.uuid(),
+          time: new Date().toLocaleDateString(),
+        },
+        {
+          taskValue: "task3",
+          id: this.uuid(),
+          time: new Date().toLocaleDateString(),
+        },
+      ],
+      input: "",
     };
   }
-  handleInput = (event) => {
-    this.setState({ inputField: event.target.value });
-    console.log(this.state.inputField);
+  delTask = (e) => {
+    let taskArray = this.state.tasks;
+    let id = e.target.getAttribute("id");
+    console.log(id);
+
+    
   };
-  addItem(InputField) {
-  
+  uuid = (len) => {
+    let length = len || 3;
+    let charCodes = [];
+    let string = "";
+
+    for (let i = 0; i < 10; i++) {
+      charCodes.push(48 + i);
+      charCodes.push(97 + i);
+    }
+    for (let i = 0; i < 16; i++) {
+      charCodes.push(107 + i);
+    }
+
+    for (let i = 0; i < length; i++) {
+      let charIndex = Math.floor(Math.random() * charCodes.length);
+      string = string + String.fromCharCode(charCodes[charIndex]);
+    }
+
+    return string;
+  };
+
+  handleInput = (e) => {
+    if (e.keyCode === 13) {
+      if (!(this.state.input === "")) {
+        this.addItem(this.state.input);
+        e.target.value = "";
+        this.setState({
+          input: "",
+        });
+      }
+    } else {
+      this.setState({ input: e.target.value });
+    }
+  };
+  // clickAddItem = ()=>{}
+  addItem() {
+    let curInput = this.state.input;
+    let newTaskObject = [
+      {
+        taskValue: curInput,
+        id: this.uuid(),
+        time: new Date().toLocaleDateString(),
+      },
+    ];
+    this.setState({
+      tasks: this.state.tasks.concat(newTaskObject),
+    });
   }
-  // addItem = (event) => {
-  //   // this.setState({
-  //   //   items: this.state.items + event.key,
-  //   // });
-  // };
   componentDidMount() {
-    document.addEventListener("keyup", (event) => {
-      this.addItem(event);
+    document.addEventListener("keyup", (e) => {
+      this.handleInput(e);
     });
   }
   render() {
@@ -41,11 +101,9 @@ export default class TodoApp extends Component {
         </div>
 
         <div>
-          <ListContainer
-            items={this.state.items}
-            previousState={this.state.previousState}
-          />
+          <ListContainer taskDel={this.delTask} tasks={this.state.tasks} />
         </div>
+        <div>{this.state.tasks.length}</div>
       </>
     );
   }
