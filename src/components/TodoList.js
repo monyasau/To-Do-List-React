@@ -1,13 +1,14 @@
 import Todo from "./Todo";
 
-export default function ListContainer({ taskDel, tasks}) {
+export default function TodoList({ taskDel, tasks}) {
   return (
     <>
       <div>
-        {tasks.map((lists, i) => {
+        {tasks.map((todo, i) => {
           return (
             <Todo
             delTask={taskDel}
+            key={i}
               time={tasks[i].time}
               id={tasks[i].id}
               taskValue={tasks[i].taskValue}

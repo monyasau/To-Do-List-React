@@ -1,3 +1,28 @@
 body {
     margin: 0;
+    height: 100vh;
+    display: flex;
+        justify-content: center;
+        align-items: center;
+    /* padding-top: 15vh; */
+}
+.app-body {
+    height: 60vh;
+    /* width: 500px; */
+    /* margin-top: 15vh; */
+    /* max-width: 500px; */
+    /* min-width: 80vw; */
+}
+.todo{
+    min-width: 300px;
+}
+@media (min-width: 576px) {
+    .app-body {
+        width: 500px;
+    }
+}
+@media (max-width: 576px) {
+    .app-body{
+        min-width: 80vw;
+    }
 }
