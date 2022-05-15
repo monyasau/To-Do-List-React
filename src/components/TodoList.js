@@ -1,9 +1,8 @@
 import Todo from "./Todo";
 
-export default function TodoList({ taskDel, tasks}) {
+export default function TodoList({ taskDel, tasks, taskCompleted}) {
   return (
     <>
-      <div>
         {tasks.map((todo, i) => {
           return (
             <Todo
@@ -12,10 +11,10 @@ export default function TodoList({ taskDel, tasks}) {
               time={tasks[i].time}
               id={tasks[i].id}
               taskValue={tasks[i].taskValue}
+              checkTask={taskCompleted}
             />
           );
         })}
-      </div>
     </>
   );
 }

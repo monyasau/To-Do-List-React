@@ -13,16 +13,19 @@ export default class TodoApp extends Component {
           taskValue: "Get groceries",
           id: this.uuid(),
           time: new Date().toLocaleDateString(),
+          completed: false
         },
         {
-          taskValue: "Gym",
+          taskValue: "Read a book",
           id: this.uuid(),
           time: new Date().toLocaleDateString(),
+          completed: false
         },
         {
-          taskValue: "task3",
+          taskValue: "Work out",
           id: this.uuid(),
           time: new Date().toLocaleDateString(),
+          completed: false
         },
       ],
       input: "",
@@ -122,27 +125,47 @@ export default class TodoApp extends Component {
       tasks: this.state.tasks.concat(newTaskObject),
     });
   }
+  taskCompleted(e) {
+    // let id = e.target.getAttribute("id");
+    // let tasks = this.state.tasks;
+    if (e.target.getAttribute("class") === "todo-value") {
+      e.target.setAttribute("class","done todo-value");
+    }else{
+      e.target.setAttribute("class","todo-value"); 
+    }
+    // let target = tasks.findIndex((index) => index.id === id);
+    // tasks[target].completed = tasks[target].completed === true ? false : true;
+  }
   componentDidMount() {
     document.addEventListener("keyup", (e) => {
       this.handleInput(e);
     });
   }
+  // this.setState({tasks: tasks});
+  // localStorage.setItem('tasks', JSON.stringify(tasks));
   render() {
     return (
       <>
-        <div className="border border-dark app-body mx-auto p-2 d-md-flex">
-          <div>
+        <div className="border border-dark app-body mx-auto p-2 rounded-2">
+          <div className="border-bottom d-flex py-2 input-box align-items-center">
             <InputField onInput={this.handleInput} />
-            <button type="submit" onClick={this.clickAddItem}>
-              ADD
+            <button
+              type="submit"
+              className="border-1 border-secondary rounded-circle add fs-4 fw-bolder"
+              onClick={this.clickAddItem}
+            >
+              +
             </button>
           </div>
-
-          <div>
-            <TodoList taskDel={this.delTask} tasks={this.state.tasks} />
+          <div className="task-list">
+            <TodoList
+              taskDel={this.delTask}
+              taskCompleted={this.taskCompleted}
+              tasks={this.state.tasks}
+            />
           </div>
-          <div>you have {this.state.tasks.length} task</div>
         </div>
+        <div className="mt-4 task-left mx-auto">you have {this.state.tasks.length} task left</div>
       </>
     );
   }
